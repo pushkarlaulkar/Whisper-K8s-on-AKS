@@ -7,8 +7,8 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - #domain name for the SSL cert 
-      secretName: cert-tls  # Uses your existing TLS secret
+        - {{ .Values.domain_name }}
+      secretName: cert-tls
   rules:
     - http:
         paths:
