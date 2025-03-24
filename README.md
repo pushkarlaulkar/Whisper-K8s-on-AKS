@@ -45,7 +45,7 @@ To install this app using Helm, perform below steps
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  3. Deploy Nginx Ingress Controller by running below commands
+  3. Deploy Nginx Ingress Controller by running below commands. During install the tls secret created above will be specified to be used as default ssl certificate.
      
      ```
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
