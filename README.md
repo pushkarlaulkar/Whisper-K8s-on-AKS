@@ -39,7 +39,13 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
 
 **Helm**
 To install this app using Helm, perform below steps
-  1. Deploy Nginx Ingress Controller by running below commands
+  1. Create a namespace. ` kubectl create ns yopass `
+  2. Create a tls secret named ` cert-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
+
+     ```
+     kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
+     ```
+  3. Deploy Nginx Ingress Controller by running below commands
      
      ```
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -49,16 +55,22 @@ To install this app using Helm, perform below steps
      helm install nginx-ingress ingress-nginx/ingress-nginx \
      --set controller.service.externalTrafficPolicy=Local \
      --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
-     --set controller.service.enableHttps=true
+     --set controller.service.enableHttps=true \
+     --set controller.extraArgs.default-ssl-certificate=yopass/cert-tls
      ```
-  2. Run the command
+  4. Run the command ` kubectl get svc nginx-ingress-ingress-nginx-controller ` to confirm if a **LoadBalancer** IP has been provisioned.
+
+     ```
+     pushkar [ ~ ]$ kubectl get svc nginx-ingress-ingress-nginx-controller
+     NAME                                     TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+     nginx-ingress-ingress-nginx-controller   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+     ```
+  5. Run the command to install **YoPass**
 
      ```
      helm install whisper ./helm --namespace yopass --create-namespace \
-     --set tls.cert="$(cat domain_name.crt | base64 -w 0)" \
-     --set tls.key="$(cat domain_name.key | base64 -w 0) \
      --set domain_name=your_preferred_fqdn
      ```
-  3. Run `kubectl -n yopass get ingress` to retrieve the IP. Point the domain name in your registrar to the IP address.
-  4. Access the app using `https://your_domain_name`.
-  5. Uninstall the app using `helm uninstall whisper --namespace yopass`.
+  6. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  7. Access the app using `https://your_domain_name`.
+  8. Uninstall the app using `helm uninstall whisper --namespace yopass`.
