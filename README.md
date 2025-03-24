@@ -10,7 +10,8 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
          helm install nginx-ingress ingress-nginx/ingress-nginx \
          --set controller.service.externalTrafficPolicy=Local \
          --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
-         --set controller.service.enableHttps=true ```
+         --set controller.service.enableHttps=true
+     ```
   4. Create a namespace. ` kubectl create ns yopass `
   5. Deploy the `memcached` & `yopass` deployment & service using the `kubectl` command
 
