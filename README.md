@@ -32,10 +32,19 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
 
 **Helm**
 To install this app using Helm, perform below steps
-  1. Generate a certificate from ACM for your domain name. The certificate arn will be required in the next step since we are running ALB on port 443.
-  2. Run the command
+  1. Deploy Nginx Ingress Controller by running below commands
+
+     ` helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx `
+     ` helm repo update `
+     ```
+         helm install nginx-ingress ingress-nginx/ingress-nginx \
+         --set controller.service.externalTrafficPolicy=Local \
+         --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
+         --set controller.service.enableHttps=true
+     ```
+  3. Run the command
 
      `helm install whisper ./helm --namespace yopass --create-namespace --set certificate_arn=arn_got_from_previous_step`.
-  3. Get the ALB DNS using `kubectl -n yopass get ingress` and point the domain name in Route 53 to the ALB as an A (alias) record.
-  4. Access the app using `https://your_domain_name`.
-  5. Uninstall the app using `helm unistall whisper --namespace whisper`.
+  4. Get the ALB DNS using `kubectl -n yopass get ingress` and point the domain name in Route 53 to the ALB as an A (alias) record.
+  5. Access the app using `https://your_domain_name`.
+  6. Uninstall the app using `helm unistall whisper --namespace whisper`.
