@@ -3,7 +3,9 @@ Instructions to deploy **YoPass** on AKS
   2. Deploy Nginx Ingress Controller by running below commands
 
      ` helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx `
+     
      ` helm repo update `
+     
      ` helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.service.externalTrafficPolicy=Local --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" --set controller.service.enableHttps=true `
   4. Create a namespace. ` kubectl create ns yopass `
   5. Deploy the `memcached` & `yopass` deployment & service using the `kubectl` command
