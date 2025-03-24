@@ -6,7 +6,6 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
      helm repo update
      ```
-     
      ```
      helm install nginx-ingress ingress-nginx/ingress-nginx \
      --set controller.service.externalTrafficPolicy=Local \
@@ -33,17 +32,18 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
 **Helm**
 To install this app using Helm, perform below steps
   1. Deploy Nginx Ingress Controller by running below commands
-
-     ` helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx `
      
-     ` helm repo update `
+     ```
+     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+     helm repo update
+     ```
      ```
      helm install nginx-ingress ingress-nginx/ingress-nginx \
      --set controller.service.externalTrafficPolicy=Local \
      --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
      --set controller.service.enableHttps=true
      ```
-  3. Run the command
+  2. Run the command
 
      ```
      helm install whisper ./helm --namespace yopass --create-namespace \
@@ -51,6 +51,6 @@ To install this app using Helm, perform below steps
      --set tls.key="$(cat domain_name.key | base64 -w 0) \
      --set domain_name=your_preferred_fqdn
      ```
-  5. Run `kubectl -n yopass get ingress` to retrieve the IP. Point the domain name in your registrar to the IP address.
-  6. Access the app using `https://your_domain_name`.
-  7. Uninstall the app using `helm uninstall whisper --namespace yopass`.
+  3. Run `kubectl -n yopass get ingress` to retrieve the IP. Point the domain name in your registrar to the IP address.
+  4. Access the app using `https://your_domain_name`.
+  5. Uninstall the app using `helm uninstall whisper --namespace yopass`.
