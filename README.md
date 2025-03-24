@@ -19,7 +19,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
   6. Create a tls secret named ` cert-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
 
      ` kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key `
-  7. Put the domain name for which the secret has been created in ` ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
+  7. Put the FQDN for which the secret has been created in ` ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
   8. Run `kubectl -n yopass get ingress` to retrieve the IP.
   9. Point the domain name in your registrar to the IP address.
   10. Access the app using `https://your_domain_name`.
