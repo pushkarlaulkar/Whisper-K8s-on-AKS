@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yopass
+  namespace: yopass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yopass
+  template:
+    metadata:
+      labels:
+        app: yopass
+    spec:
+      containers:
+        - name: yopass
+          image: jhaals/yopass:11.15.0
+          args:
+            - "--memcached=memcached:11211"
+            - "--port=8082"
+          ports:
+            - containerPort: 8082
