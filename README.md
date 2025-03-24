@@ -6,7 +6,8 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
      
      ` helm repo update `
      
-     ``` helm install nginx-ingress ingress-nginx/ingress-nginx \
+     ```
+         helm install nginx-ingress ingress-nginx/ingress-nginx \
          --set controller.service.externalTrafficPolicy=Local \
          --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
          --set controller.service.enableHttps=true ```
