@@ -24,9 +24,8 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
   9. Put the FQDN for which the secret has been created in ` ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
-  10. Run `kubectl -n yopass get ingress` to retrieve the IP.
-  11. Point the domain name in your registrar to the IP address.
-  12. Access the app using `https://your_domain_name`.
+  10. Run `kubectl -n yopass get ingress` to retrieve the IP. Point the domain name in your registrar to the IP address.
+  11. Access the app using `https://your_domain_name`.
 
 -----------------------------
 
@@ -48,8 +47,9 @@ To install this app using Helm, perform below steps
      ```
      helm install whisper ./helm --namespace yopass --create-namespace \
      --set tls.cert="$(cat domain_name.crt | base64 -w 0)" \
-     --set tls.key="$(cat domain_name.key | base64 -w 0)
+     --set tls.key="$(cat domain_name.key | base64 -w 0) \
+     --set domain_name=your_preferred_fqdn
      ```
-  5. Get the ALB DNS using `kubectl -n yopass get ingress` and point the domain name in Route 53 to the ALB as an A (alias) record.
+  5. Run `kubectl -n yopass get ingress` to retrieve the IP. Point the domain name in your registrar to the IP address.
   6. Access the app using `https://your_domain_name`.
-  7. Uninstall the app using `helm unistall whisper --namespace whisper`.
+  7. Uninstall the app using `helm uninstall whisper --namespace yopass`.
