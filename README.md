@@ -35,6 +35,7 @@ To install this app using Helm, perform below steps
   1. Deploy Nginx Ingress Controller by running below commands
 
      ` helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx `
+     
      ` helm repo update `
      ```
          helm install nginx-ingress ingress-nginx/ingress-nginx \
@@ -44,7 +45,11 @@ To install this app using Helm, perform below steps
      ```
   3. Run the command
 
-     `helm install whisper ./helm --namespace yopass --create-namespace --set certificate_arn=arn_got_from_previous_step`.
-  4. Get the ALB DNS using `kubectl -n yopass get ingress` and point the domain name in Route 53 to the ALB as an A (alias) record.
-  5. Access the app using `https://your_domain_name`.
-  6. Uninstall the app using `helm unistall whisper --namespace whisper`.
+     ```
+     helm install whisper ./helm --namespace yopass --create-namespace \
+     --set tls.cert="$(cat domain_name.crt | base64 -w 0)" \
+     --set tls.key="$(cat domain_name.key | base64 -w 0)
+     ```
+  5. Get the ALB DNS using `kubectl -n yopass get ingress` and point the domain name in Route 53 to the ALB as an A (alias) record.
+  6. Access the app using `https://your_domain_name`.
+  7. Uninstall the app using `helm unistall whisper --namespace whisper`.
