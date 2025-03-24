@@ -1,4 +1,4 @@
-Instructions to deploy **YoPass** on AKS
+Instructions to deploy **YoPass** on Azure Kubernetes Service
   1. Deploy AKS cluster through Azure portal.
   2. Deploy Nginx Ingress Controller by running below commands
 
@@ -11,11 +11,13 @@ Instructions to deploy **YoPass** on AKS
   5. Deploy the `memcached` & `yopass` deployment & service using the `kubectl` command
 
      ` kubectl -n yopass apply -f yopass-dep.yml -f yopass-svc.yml -f memcached-dep.yml -f memcached-svc.yml `
-  6. Deploy `Ingress`, `Ingress Class` & `Ingress Params` which will create an ALB listening on port 443. We will need to provide the arn of the certificate in the `Ingress` object. The certificate for the domain name needs to be created in ACM and DNS validation or Email validation needs to be done prior to creating these resources.
-  7. Run the command ` kubectl -n yopass apply -f ingress-all.yml `
-  8. Run `kubectl -n yopass get ingress` to retrieve the ALB DNS.
-  9. Point the domain name in Route 53 to the ALB as an A (alias) record.
-  10. Access the app using `https://your_domain_name`.
+  6. Create a tls secret named ` cert-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should be already be present.
+
+     ` kubectl -n yopass create tls cert-tls --cert=domain_name.crt --key=domain_name.key `
+  8. Run the command ` kubectl -n yopass apply -f ingress-all.yml `
+  9. Run `kubectl -n yopass get ingress` to retrieve the ALB DNS.
+  10. Point the domain name in Route 53 to the ALB as an A (alias) record.
+  11. Access the app using `https://your_domain_name`.
 
 -----------------------------
 
