@@ -2,9 +2,10 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
   1. Deploy AKS cluster through Azure portal.
   2. Deploy Nginx Ingress Controller by running below commands
 
-     ` helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx `
-     
-     ` helm repo update `
+     ```
+     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+     helm repo update
+     ```
      
      ```
      helm install nginx-ingress ingress-nginx/ingress-nginx \
