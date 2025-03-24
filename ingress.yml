@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - #domain name for the SSL cert 
+      secretName: cert-tls  # Uses your existing TLS secret
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yopass
+                port:
+                  number: 8082
