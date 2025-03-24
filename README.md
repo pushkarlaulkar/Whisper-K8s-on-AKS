@@ -68,8 +68,7 @@ To install this app using Helm, perform below steps
   5. Run the command to install **YoPass**
 
      ```
-     helm install whisper ./helm --namespace yopass --create-namespace \
-     --set domain_name=your_preferred_fqdn
+     helm install whisper ./helm --namespace yopass --set domain_name=your_preferred_fqdn
      ```
   6. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
   7. Access the app using `https://your_domain_name`.
