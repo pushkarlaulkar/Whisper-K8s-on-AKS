@@ -1,0 +1,42 @@
+name: Create Namespace in AKS
+
+on:
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+
+jobs:
+  create-namespace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get AKS Credentials
+        run: |
+          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --overwrite-existing
+
+      - name: Create Kubernetes Namespace
+        run: |
+          kubectl create namespace my-namespace || echo "Namespace already exists"
+
+      - name: Verify Namespace Creation
+        run: |
+          kubectl get namespaces
+
+#env:
+#  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
+#  CONTAINER_NAME: "your-container-name"
+#  RESOURCE_GROUP: "your-resource-group"
+#  CLUSTER_NAME: "your-cluster-name"
+#  DEPLOYMENT_MANIFEST_PATH: "your-deployment-manifest-path"
