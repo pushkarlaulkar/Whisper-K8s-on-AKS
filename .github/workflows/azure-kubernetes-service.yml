@@ -1,4 +1,4 @@
-name: Create Namespace in AKS
+name: Deploy To AKS
 
 on:
   workflow_dispatch:  # Manual trigger
