@@ -22,17 +22,17 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Get AKS Credentials
-        run: |
-          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --overwrite-existing
+      #- name: Get AKS Credentials
+      #  run: |
+      #    az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --overwrite-existing
 
-      - name: Create Kubernetes Namespace
-        run: |
-          kubectl create namespace my-namespace || echo "Namespace already exists"
+      #- name: Create Kubernetes Namespace
+      #  run: |
+      #    kubectl create namespace my-namespace || echo "Namespace already exists"
 
-      - name: Verify Namespace Creation
-        run: |
-          kubectl get namespaces
+      #- name: Verify Namespace Creation
+      #  run: |
+      #    kubectl get namespaces
 
 #env:
 #  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
