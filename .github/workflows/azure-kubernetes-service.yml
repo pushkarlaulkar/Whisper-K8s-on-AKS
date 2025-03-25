@@ -14,11 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check az CLI Version
+        run: az --version
+
+
       # Logs in with your Azure credentials
-      - name: Azure login
-        uses: azure/login@v1.4.6
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #- name: Azure login
+      #  uses: azure/login@v1.4.6
+      #  with:
+      #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       #- name: Get AKS Credentials
       #  run: |
