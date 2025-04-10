@@ -1,3 +1,27 @@
+Instructions to deploy **YoPass** on Azure Kubernetes Service using the default **App Routing** add on
+  1. Deploy AKS cluster through Azure portal.
+  2. Create a namespace. ` kubectl create ns yopass `
+  3. Create a tls secret named ` cert-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
+
+     ```
+     kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
+     ```
+  4. Run the command ` kubectl -n app-routing get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
+
+     ```
+     pushkar [ ~ ]$ kubectl -n app-routing get svc nginx
+     NAME                                     TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+     nginx                                    LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+     ```
+  5. Deploy the `memcached` & `yopass` deployment & service using the `kubectl` command
+
+     ```
+     kubectl -n yopass apply -f yopass-dep.yml -f yopass-svc.yml -f memcached-dep.yml -f memcached-svc.yml
+     ```
+  6. Put the FQDN for which the secret has been created in ` app-routing-ingress.yml ` file and then run the command ` kubectl -n yopass apply -f app-routing-ingress.yml `
+  7. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  8. Access the app using `https://your_domain_name`.
+
 Instructions to deploy **YoPass** on Azure Kubernetes Service
   1. Deploy AKS cluster through Azure portal.
   2. Create a namespace. ` kubectl create ns yopass `
