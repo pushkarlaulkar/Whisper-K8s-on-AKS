@@ -4,13 +4,14 @@ metadata:
   name: yopass-ingress
   namespace: yopass
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{- if eq .Values.ingressClassName "web-app-routing" }}webapprouting.kubernetes.azure.com{{- else if eq .Values.ingressClassName "nginx" }}nginx{{- end }}
   tls:
     - hosts:
         - {{ .Values.domain_name }}
       secretName: cert-tls
   rules:
-    - http:
+    - host: "{{ .Values.domain_name }}"
+      http:
         paths:
           - path: /
             pathType: Prefix
