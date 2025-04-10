@@ -70,14 +70,21 @@ To install this app using Helm using the default **App Routing** add on, perform
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  3. Run the command to install **YoPass**
+  3. Run the command ` kubectl -n app-routing get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
+
+     ```
+     pushkar [ ~ ]$ kubectl -n app-routing get svc nginx
+     NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+     nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+     ```
+  4. Run the command to install **YoPass**
 
      ```
      helm install whisper ./helm --namespace yopass --set ingressClassName="web-app-routing" --set domain_name=your_preferred_fqdn
      ```
-  4. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
-  5. Access the app using `https://your_domain_name`.
-  6. Uninstall the app using `helm uninstall whisper --namespace yopass`.
+  5. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  6. Access the app using `https://your_domain_name`.
+  7. Uninstall the app using `helm uninstall whisper --namespace yopass`.
 
 -----------------------------
 
