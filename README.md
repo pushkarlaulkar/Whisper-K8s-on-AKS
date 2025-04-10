@@ -22,7 +22,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using the default 
   7. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
   8. Access the app using `https://your_domain_name`.
 
-Instructions to deploy **YoPass** on Azure Kubernetes Service
+Instructions to deploy **YoPass** on Azure Kubernetes Service using your own nginx ingress
   1. Deploy AKS cluster through Azure portal.
   2. Create a namespace. ` kubectl create ns yopass `
   3. Create a tls secret named ` cert-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
@@ -41,7 +41,6 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
      --set controller.service.externalTrafficPolicy=Local \
      --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
      --set controller.service.enableHttps=true \
-     --set controller.extraArgs.default-ssl-certificate=yopass/cert-tls
      ```
   5. Run the command ` kubectl get svc nginx-ingress-ingress-nginx-controller ` to confirm if a **LoadBalancer** IP has been provisioned.
 
@@ -55,7 +54,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service
      ```
      kubectl -n yopass apply -f yopass-dep.yml -f yopass-svc.yml -f memcached-dep.yml -f memcached-svc.yml
      ```
-  7. Put the FQDN for which the secret has been created in ` ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
+  7. Put the FQDN for which the secret has been created in ` nginx-ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
   8. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
   9. Access the app using `https://your_domain_name`.
 
