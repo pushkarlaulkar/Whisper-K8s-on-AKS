@@ -22,6 +22,8 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using the default 
   7. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
   8. Access the app using `https://your_domain_name`.
 
+-----------------------------
+
 Instructions to deploy **YoPass** on Azure Kubernetes Service using your own nginx ingress
   1. Deploy AKS cluster through Azure portal.
   2. Create a namespace. ` kubectl create ns yopass `
