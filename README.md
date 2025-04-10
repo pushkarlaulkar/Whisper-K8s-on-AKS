@@ -42,7 +42,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using your own ngi
      helm install nginx-ingress ingress-nginx/ingress-nginx \
      --set controller.service.externalTrafficPolicy=Local \
      --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
-     --set controller.service.enableHttps=true \
+     --set controller.service.enableHttps=true
      ```
   5. Run the command ` kubectl get svc nginx-ingress-ingress-nginx-controller ` to confirm if a **LoadBalancer** IP has been provisioned.
 
