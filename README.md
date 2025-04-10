@@ -6,10 +6,10 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using the default 
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  4. Run the command ` kubectl -n app-routing get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
+  4. Run the command ` kubectl -n app-routing-system get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
 
      ```
-     pushkar [ ~ ]$ kubectl -n app-routing get svc nginx
+     pushkar [ ~ ]$ kubectl -n app-routing-system get svc nginx
      NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
      nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
      ```
@@ -70,10 +70,10 @@ To install this app using Helm using the default **App Routing** add on, perform
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  3. Run the command ` kubectl -n app-routing get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
+  3. Run the command ` kubectl -n app-routing-system get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
 
      ```
-     pushkar [ ~ ]$ kubectl -n app-routing get svc nginx
+     pushkar [ ~ ]$ kubectl -n app-routing-system get svc nginx
      NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
      nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
      ```
