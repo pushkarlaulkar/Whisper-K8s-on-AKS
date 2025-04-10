@@ -32,7 +32,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using your own ngi
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  4. Deploy Nginx Ingress Controller by running below commands. During install the tls secret created above will be specified to be used as default ssl certificate.
+  4. Deploy Nginx Ingress Controller by running below commands.
 
      ```
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -89,7 +89,7 @@ To install this app using Helm using your own nginx ingress, perform below steps
      ```
      kubectl -n yopass create secret tls cert-tls --cert=domain_name.crt --key=domain_name.key
      ```
-  3. Deploy Nginx Ingress Controller by running below commands. During install the tls secret created above will be specified to be used as default ssl certificate.
+  3. Deploy Nginx Ingress Controller by running below commands.
      
      ```
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
