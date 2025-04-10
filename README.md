@@ -56,7 +56,7 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using your own ngi
      ```
      kubectl -n yopass apply -f yopass-dep.yml -f yopass-svc.yml -f memcached-dep.yml -f memcached-svc.yml
      ```
-  7. Put the FQDN for which the secret has been created in ` nginx-ingress.yml ` file and then run the command ` kubectl -n yopass apply -f ingress.yml `
+  7. Put the FQDN for which the secret has been created in ` nginx-ingress.yml ` file and then run the command ` kubectl -n yopass apply -f nginx-ingress.yml `
   8. Run `kubectl -n yopass get ingress` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
   9. Access the app using `https://your_domain_name`.
 
