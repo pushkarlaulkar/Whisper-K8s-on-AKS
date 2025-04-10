@@ -10,8 +10,8 @@ Instructions to deploy **YoPass** on Azure Kubernetes Service using the default 
 
      ```
      pushkar [ ~ ]$ kubectl -n app-routing get svc nginx
-     NAME                                     TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
-     nginx                                    LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+     NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+     nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
      ```
   5. Deploy the `memcached` & `yopass` deployment & service using the `kubectl` command
 
