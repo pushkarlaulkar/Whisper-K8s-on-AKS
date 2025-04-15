@@ -144,3 +144,46 @@ To install this app using ArgoCD, perform below steps
      ```
      kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
      ```
+
+-----------------------------
+
+**ArgoCD** installation using **Nginx Ingress**
+To install this app using ArgoCD, perform below steps
+  1. Create a namespace. ` kubectl create ns argocd `.
+  2. Create a tls secret named ` argocd-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
+
+     ```
+     kubectl -n argocd create secret tls argocd-tls --cert=argocd_domain_name.crt --key=argocd_domain_name.key
+     ```
+  3. Deploy Nginx Ingress Controller by running below commands.
+
+     ```
+     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+     helm repo update
+     ```
+     ```
+     helm install nginx-ingress ingress-nginx/ingress-nginx \
+     --set controller.service.externalTrafficPolicy=Local \
+     --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
+     --set controller.service.enableHttps=true
+     ```
+  4. Run the command ` kubectl get svc nginx-ingress-ingress-nginx-controller ` to confirm if a **LoadBalancer** IP has been provisioned.
+
+     ```
+     pushkar [ ~ ]$ kubectl get svc nginx-ingress-ingress-nginx-controller
+     NAME                                     TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+     nginx-ingress-ingress-nginx-controller   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+     ```
+  5. Apply **ArgoCD** manifest file
+     
+     ```
+     kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+     ```
+  6. Put the FQDN for which the argocd secret has been created in ` argocd-nginx-ingress.yml ` file and then run the command ` kubectl -n argocd apply -f argocd-nginx-ingress.yml `
+  7. Run ` kubectl -n argocd get ingress ` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  8. Access ArgoCD using ` https://argocd_domain_name `.
+  9. To get the initial admin user password run the command
+
+     ```
+     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+     ```
