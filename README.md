@@ -137,10 +137,17 @@ To install this app using ArgoCD, perform below steps
      ```
      kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
      ```
-  5. Put the FQDN for which the argocd secret has been created in ` argocd-web-app-routing-ingress.yml ` file and then run the command ` kubectl -n argocd apply -f argocd-web-app-routing-ingress.yml `
-  6. Run ` kubectl -n argocd get ingress ` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
-  7. Access ArgoCD using ` https://argocd_domain_name `.
-  8. To get the initial admin user password run the command
+  5. Patch the ConfigMap **argocd-cmd-params-cm** to add `server.insecure : true`, then scale the deployment to 0 & then 1
+
+     ```
+     kubectl -n argocd patch configmap argocd-cmd-params-cm --type merge -p '{"data":{"server.insecure":"true"}}'
+     kubectl -n argocd scale deploy argocd-server --replicas=0
+     kubectl -n argocd scale deploy argocd-server --replicas=1
+     ```
+  6. Put the FQDN for which the argocd secret has been created in ` argocd-web-app-routing-ingress.yml ` file and then run the command ` kubectl -n argocd apply -f argocd-web-app-routing-ingress.yml `
+  7. Run ` kubectl -n argocd get ingress ` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  8. Access ArgoCD using ` https://argocd_domain_name `.
+  9. To get the initial admin user password run the command
 
      ```
      kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
@@ -181,10 +188,17 @@ To install this app using ArgoCD, perform below steps
      ```
      kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
      ```
-  6. Put the FQDN for which the argocd secret has been created in ` argocd-nginx-ingress.yml ` file and then run the command ` kubectl -n argocd apply -f argocd-nginx-ingress.yml `
-  7. Run ` kubectl -n argocd get ingress ` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
-  8. Access ArgoCD using ` https://argocd_domain_name `.
-  9. To get the initial admin user password run the command
+  6. Patch the ConfigMap **argocd-cmd-params-cm** to add `server.insecure : true`, then scale the deployment to 0 & then 1
+
+     ```
+     kubectl -n argocd patch configmap argocd-cmd-params-cm --type merge -p '{"data":{"server.insecure":"true"}}'
+     kubectl -n argocd scale deploy argocd-server --replicas=0
+     kubectl -n argocd scale deploy argocd-server --replicas=1
+     ```
+  7. Put the FQDN for which the argocd secret has been created in ` argocd-nginx-ingress.yml ` file and then run the command ` kubectl -n argocd apply -f argocd-nginx-ingress.yml `
+  8. Run ` kubectl -n argocd get ingress ` to retrieve the IP. This may take some time to match with the **LoadBalancer** IP above. Point the domain name in your registrar to the IP address.
+  9. Access ArgoCD using ` https://argocd_domain_name `.
+ 10. To get the initial admin user password run the command
 
      ```
      kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
