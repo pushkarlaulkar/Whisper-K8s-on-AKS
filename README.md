@@ -149,6 +149,7 @@ To install this app using ArgoCD, perform below steps
 -----------------------------
 
 **ArgoCD** installation using **Nginx Ingress**
+
 To install this app using ArgoCD, perform below steps
   1. Create a namespace. ` kubectl create ns argocd `.
   2. Create a tls secret named ` argocd-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
