@@ -117,6 +117,7 @@ To install this app using Helm using your own nginx ingress, perform below steps
 -----------------------------
 
 **ArgoCD** installation using the default **App Routing** add on
+
 To install this app using ArgoCD, perform below steps
   1. Create a namespace. ` kubectl create ns argocd `.
   2. Create a tls secret named ` argocd-tls ` which has the domain's certificate & private key by running below command. The domain's .crt & .key file should already be present.
