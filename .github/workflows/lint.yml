@@ -21,7 +21,7 @@ jobs:
 
       - name: Validate manifests
         run: |
-          find . -type f \( -name "*.yml" -o -name "*.yaml" \) ! -path "./.github/*" ! -path "./helm/Chart.yaml" | xargs kubeconform -strict -summary
+          find . -type f \( -name "*.yml" -o -name "*.yaml" \) ! -path "./.github/*" ! -path "./helm/*" | xargs kubeconform -strict -summary
 
       - name: Render Helm templates and validate
         if: ${{ always() }}
