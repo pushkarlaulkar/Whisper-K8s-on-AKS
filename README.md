@@ -220,16 +220,16 @@ To install the Prometheus stack, perform below steps
       ✅ This installs :- Prometheus, Grafana, Node Exporter, kube-state-metrics, Alertmanager
    2. Create a tls secret named ` monitoring-tls ` which has the Grafana domain's certificate & private key by running below command. The Grafana domain's .crt & .key file should already be present.
 
-     ```
-     kubectl -n monitoring create secret tls monitoring-tls --cert=grafana_domain_name.crt --key=grafana_domain_name.key
-     ```
+      ```
+      kubectl -n monitoring create secret tls monitoring-tls --cert=grafana_domain_name.crt --key=grafana_domain_name.key
+      ```
    3. Run the command ` kubectl -n app-routing-system get svc nginx ` to confirm if a **LoadBalancer** IP has been provisioned.
 
-     ```
-     pushkar [ ~ ]$ kubectl -n app-routing-system get svc nginx
-     NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
-     nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
-     ```
+      ```
+      pushkar [ ~ ]$ kubectl -n app-routing-system get svc nginx
+      NAME    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                      AGE
+      nginx   LoadBalancer   10.0.58.180   20.174.45.64   80:32767/TCP,443:30598/TCP   110s
+      ```
    4. Put the FQDN for which the monitoring secret has been created in ` monitoring-web-app-routing-ingress.yml ` file and then run the command ` kubectl -n monitoring apply -f monitoring-web-app-routing-ingress.yml `
 
       ```
@@ -259,21 +259,21 @@ To install the Prometheus stack, perform below steps
       ✅ This installs :- Prometheus, Grafana, Node Exporter, kube-state-metrics, Alertmanager
    2. Create a tls secret named ` monitoring-tls ` which has the Grafana domain's certificate & private key by running below command. The Grafana domain's .crt & .key file should already be present.
 
-     ```
-     kubectl -n monitoring create secret tls monitoring-tls --cert=grafana_domain_name.crt --key=grafana_domain_name.key
-     ```
+      ```
+      kubectl -n monitoring create secret tls monitoring-tls --cert=grafana_domain_name.crt --key=grafana_domain_name.key
+      ```
    3. Deploy Nginx Ingress Controller by running below commands.
 
-     ```
-     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-     helm repo update
-     ```
-     ```
-     helm install nginx-ingress ingress-nginx/ingress-nginx \
-     --set controller.service.externalTrafficPolicy=Local \
-     --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
-     --set controller.service.enableHttps=true
-     ```
+      ```
+      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+      helm repo update
+      ```
+      ```
+      helm install nginx-ingress ingress-nginx/ingress-nginx \
+      --set controller.service.externalTrafficPolicy=Local \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/" \
+      --set controller.service.enableHttps=true
+      ```
   4. Run the command ` kubectl get svc nginx-ingress-ingress-nginx-controller ` to confirm if a **LoadBalancer** IP has been provisioned.
 
      ```
